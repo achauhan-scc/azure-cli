@@ -24,7 +24,8 @@ from azure.mgmt.cognitiveservices.models import Account as CognitiveServicesAcco
     Deployment, DeploymentModel, DeploymentScaleSettings, DeploymentProperties, \
     CommitmentPlan, CommitmentPlanProperties, CommitmentPeriod, \
     ConnectionPropertiesV2BasicResource, ConnectionUpdateContent, \
-    Project, ProjectProperties
+    Project, ProjectProperties, \
+    Compute, ComputeProperties, Pool
 from azure.cli.command_modules.cognitiveservices._client_factory import cf_accounts, cf_resource_skus
 from azure.cli.core.azclierror import (
     BadRequestError,
@@ -2297,3 +2298,26 @@ def project_connection_update(
     """
     project_connection = ConnectionUpdateContent(properties=instance.properties)
     return project_connection
+
+
+def compute_begin_create_or_update(
+        client, resource_group_name, account_name, compute_name,
+        location, pool_name, instance_type, node_count,
+        vm_priority="Regular"):
+    """
+    Create a compute resource for Azure Cognitive Services account.
+    """
+    compute = Compute(
+        properties=ComputeProperties(
+            location=location,
+            pools=[Pool(
+                name=pool_name,
+                instance_type=instance_type,
+                node_count=node_count,
+                vm_priority=vm_priority,
+            )],
+        )
+    )
+    return client.begin_create_or_update(
+        resource_group_name, account_name, compute_name, compute, polling=False
+    )

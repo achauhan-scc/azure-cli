@@ -6,6 +6,10 @@ Release History
 2.84.0
 ++++++
 
+**Cognitive Services**
+
+* [PREVIEW] `az cognitiveservices account compute`: Add new command group to manage compute resources for Cognitive Services accounts, including `create`, `delete`, `show`, and `list` commands.
+
 **AKS**
 
 * `az aks create`: Add `--enable-container-network-logs` parameter to enable container network logs (#32700)
