@@ -2321,3 +2321,15 @@ def compute_begin_create_or_update(
     return client.begin_create_or_update(
         resource_group_name, account_name, compute_name, compute, polling=False
     )
+
+
+def compute_list(client, resource_group_name, account_name):
+    return client.list(resource_group_name, account_name)
+
+
+def compute_show(client, resource_group_name, account_name, compute_name):
+    return client.get(resource_group_name, account_name, compute_name)
+
+
+def compute_delete(client, resource_group_name, account_name, compute_name):
+    return client.begin_delete(resource_group_name, account_name, compute_name, polling=False)

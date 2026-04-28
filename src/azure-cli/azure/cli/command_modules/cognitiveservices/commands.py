@@ -178,6 +178,6 @@ def load_command_table(self, _):
             'cognitiveservices account compute', computes_type,
             client_factory=cf_computes, is_preview=True) as g:
         g.custom_command('create', 'compute_begin_create_or_update')
-        g.command('delete', 'begin_delete')
-        g.show_command('show', 'get')
-        g.command('list', 'list')
+        g.custom_command('delete', 'compute_delete')
+        g.custom_command('show', 'compute_show')
+        g.custom_command('list', 'compute_list')
