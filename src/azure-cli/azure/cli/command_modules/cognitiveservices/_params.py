@@ -726,3 +726,4 @@ def load_arguments(self, _):
         c.argument('instance_type', arg_group='Pool', help='VM instance type for the pool (e.g. Standard_DS3_v2).')
         c.argument('node_count', arg_group='Pool', type=int, help='Number of nodes in the pool.')
         c.argument('vm_priority', arg_group='Pool', help='VM priority for the pool (e.g. Dedicated, LowPriority).')
+        c.argument('no_wait', help='Do not wait for the long-running operation to finish.')

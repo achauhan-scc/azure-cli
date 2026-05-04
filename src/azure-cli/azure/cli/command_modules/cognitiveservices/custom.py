@@ -2303,24 +2303,32 @@ def project_connection_update(
 def compute_begin_create_or_update(
         client, resource_group_name, account_name, compute_name,
         location, pool_name, instance_type, node_count,
-        vm_priority="Regular"):
+        vm_priority="Regular", no_wait=False):
     """
     Create a compute resource for Azure Cognitive Services account.
     """
-    compute = Compute(
+    resource = Compute(
         properties=ComputeProperties(
             location=location,
-            pools=[Pool(
-                name=pool_name,
-                instance_type=instance_type,
-                node_count=node_count,
-                vm_priority=vm_priority,
-            )],
-        )
+            pools=[
+                Pool(
+                    name=pool_name,
+                    instance_type=instance_type,
+                    node_count=node_count,
+                    vm_priority=vm_priority,
+                )
+            ],
+        ),
     )
-    return client.begin_create_or_update(
-        resource_group_name, account_name, compute_name, compute, polling=False
+    poller = client.begin_create_or_update(
+        resource_group_name=resource_group_name,
+        account_name=account_name,
+        compute_name=compute_name,
+        resource=resource,
     )
+    if not no_wait:
+        return poller.result()
+    return poller
 
 
 def compute_list(client, resource_group_name, account_name):
@@ -2331,5 +2339,8 @@ def compute_show(client, resource_group_name, account_name, compute_name):
     return client.get(resource_group_name, account_name, compute_name)
 
 
-def compute_delete(client, resource_group_name, account_name, compute_name):
-    return client.begin_delete(resource_group_name, account_name, compute_name, polling=False)
+def compute_delete(client, resource_group_name, account_name, compute_name, no_wait=False):
+    poller = client.begin_delete(resource_group_name, account_name, compute_name)
+    if not no_wait:
+        return poller.result()
+    return poller
