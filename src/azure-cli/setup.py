@@ -17,7 +17,7 @@ except ImportError:
     logging.warning("Wheel is not available, disabling bdist_wheel hook")
     cmdclass = {}
 
-VERSION = "2.84.0"
+VERSION = "2.84.0.dev3+foundry.prpr"
 # If we have source, validate that our version numbers match
 # This should prevent uploading releases with mismatched versions.
 try:
@@ -54,7 +54,7 @@ DEPENDENCIES = [
     'azure-appconfiguration~=1.7.2',
     'azure-ai-projects~=1.0.0',
     'azure-batch==15.0.0b1',
-    'azure-cli-core=={}'.format(VERSION),
+    'azure-cli-core==2.84.0',
     'azure-cosmos~=3.0,>=3.0.2',
     'azure-data-tables==12.4.0',
     'azure-datalake-store~=1.0.1',
@@ -74,7 +74,7 @@ DEPENDENCIES = [
     'azure-mgmt-billing==6.0.0',
     'azure-mgmt-botservice~=2.0.0b3',
     'azure-mgmt-cdn==12.0.0',
-    'azure-mgmt-cognitiveservices~=14.1.0',
+    'azure-mgmt-cognitiveservices==15.0.0b1.dev4+foundry.prpr',
     'azure-mgmt-compute~=34.1.0',
     'azure-mgmt-containerinstance==10.2.0b1',
     'azure-mgmt-containerregistry==14.1.0b1',

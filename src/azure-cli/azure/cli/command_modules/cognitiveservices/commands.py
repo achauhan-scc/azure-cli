@@ -6,7 +6,7 @@
 from azure.cli.core.commands import CliCommandType
 from azure.cli.command_modules.cognitiveservices._client_factory import cf_accounts, cf_resource_skus, \
     cf_deleted_accounts, cf_deployments, cf_commitment_plans, cf_commitment_tiers, cf_models, cf_usages, \
-    cf_ai_projects, cf_account_connections, cf_projects, cf_project_connections
+    cf_ai_projects, cf_account_connections, cf_projects, cf_project_connections, cf_computes
 
 
 def load_command_table(self, _):
@@ -52,6 +52,11 @@ def load_command_table(self, _):
     project_connections_type = CliCommandType(
         operations_tmpl='azure.mgmt.cognitiveservices.operations#ProjectConnectionsOperations.{}',
         client_factory=cf_project_connections
+    )
+
+    computes_type = CliCommandType(
+        operations_tmpl='azure.mgmt.cognitiveservices.operations#ComputesOperations.{}',
+        client_factory=cf_computes
     )
 
     with self.command_group('cognitiveservices account', accounts_type, client_factory=cf_accounts) as g:
@@ -168,3 +173,11 @@ def load_command_table(self, _):
             setter_name='update',
             setter_arg_name='connection',
             custom_func_name='account_connection_update')
+
+    with self.command_group(
+            'cognitiveservices account compute', computes_type,
+            client_factory=cf_computes, is_preview=True) as g:
+        g.custom_command('create', 'compute_begin_create_or_update')
+        g.custom_command('delete', 'compute_delete')
+        g.custom_command('show', 'compute_show')
+        g.custom_command('list', 'compute_list')

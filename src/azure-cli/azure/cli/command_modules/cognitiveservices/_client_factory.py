@@ -103,3 +103,7 @@ def cf_project_capability_hosts(cli_ctx, *_):
 
 def cf_project_connections(cli_ctx, *_):
     return get_cognitiveservices_management_client(cli_ctx).project_connections
+
+
+def cf_computes(cli_ctx, *_):
+    return get_cognitiveservices_management_client(cli_ctx).computes
