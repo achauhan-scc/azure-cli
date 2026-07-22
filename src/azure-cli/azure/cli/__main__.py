@@ -17,7 +17,7 @@ from knack.completion import ARGCOMPLETE_ENV_NAME
 from knack.log import get_logger
 
 __author__ = "Microsoft Corporation <python@microsoft.com>"
-__version__ = "2.84.0.dev4+foundry.prpr"
+__version__ = "2.84.0.dev5+foundry.prpr"
 
 
 logger = get_logger(__name__)
