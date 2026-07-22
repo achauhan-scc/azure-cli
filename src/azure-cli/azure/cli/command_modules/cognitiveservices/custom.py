@@ -25,7 +25,7 @@ from azure.mgmt.cognitiveservices.models import Account as CognitiveServicesAcco
     CommitmentPlan, CommitmentPlanProperties, CommitmentPeriod, \
     ConnectionPropertiesV2BasicResource, ConnectionUpdateContent, \
     Project, ProjectProperties, \
-    Compute, ComputeProperties, Pool
+    Compute, ClusterComputeProperties, Pool
 from azure.cli.command_modules.cognitiveservices._client_factory import cf_accounts, cf_resource_skus
 from azure.cli.core.azclierror import (
     BadRequestError,
@@ -2308,8 +2308,8 @@ def compute_begin_create_or_update(
     Create a compute resource for Azure Cognitive Services account.
     """
     resource = Compute(
-        properties=ComputeProperties(
-            location=location,
+        location=location,
+        properties=ClusterComputeProperties(
             pools=[
                 Pool(
                     name=pool_name,
@@ -2320,6 +2320,8 @@ def compute_begin_create_or_update(
             ],
         ),
     )
+    # The service also requires location inside properties, not just at the top level.
+    resource.properties["location"] = location
     poller = client.begin_create_or_update(
         resource_group_name=resource_group_name,
         account_name=account_name,
